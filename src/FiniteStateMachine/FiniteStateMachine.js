@@ -15,7 +15,6 @@ class StateMachine {
                     });
                 }
                 this._addState(state, item.initial || false);
-                return this;
             });
         }
     }
@@ -25,7 +24,6 @@ class StateMachine {
             throw 'State Machine cannot start. No initialState states defined.';
         }
         this._transitionTo( this._initialState, null );
-        return this;
     };
 
     get states() {
@@ -48,14 +46,12 @@ class StateMachine {
     }
 
     action(action) {
-        // Attempt to retrieve the new State
         const newStateTarget = this._currentState.getTarget(action);
         const newState = this._states[ newStateTarget ];
-        // Only transition if there's a state associated with the action
+        // Only transition if this action in valid
         if( newState ) {
             this._transitionTo( newState, action );
         }
-        return this;
     };
     _transitionTo( nextState) {
         this._currentState = nextState;
